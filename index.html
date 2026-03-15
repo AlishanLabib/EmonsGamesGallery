@@ -188,6 +188,7 @@
                     </select>
                 </div>
                 <div id="search-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <div id="search-grid-btn-container" class="mt-12 text-center w-full hidden"></div>
             </div>
         </div>
 
@@ -266,6 +267,7 @@
                     </div>
                 </div>
                 <div id="home-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+                <div id="home-grid-btn-container" class="mt-12 text-center w-full hidden"></div>
                 
                 <!-- Coming Soon Section Footer -->
                 <div class="mt-16 flex flex-col items-center justify-center p-8 border border-dashed border-white/10 rounded-2xl bg-white/5 text-center animate-fade-up">
@@ -296,6 +298,7 @@
                     </select>
                 </div>
                 <div id="online-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <div id="online-grid-btn-container" class="mt-12 text-center w-full hidden"></div>
                 
                 <!-- Coming Soon Section Footer -->
                 <div class="mt-16 flex flex-col items-center justify-center p-8 border border-dashed border-white/10 rounded-2xl bg-white/5 text-center">
@@ -325,6 +328,7 @@
                     </select>
                 </div>
                 <div id="offline-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <div id="offline-grid-btn-container" class="mt-12 text-center w-full hidden"></div>
 
                 <!-- Coming Soon Section Footer -->
                 <div class="mt-16 flex flex-col items-center justify-center p-8 border border-dashed border-white/10 rounded-2xl bg-white/5 text-center">
@@ -354,6 +358,7 @@
                     </select>
                 </div>
                 <div id="ps-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <div id="ps-grid-btn-container" class="mt-12 text-center w-full hidden"></div>
 
                 <!-- Coming Soon Section Footer -->
                 <div class="mt-16 flex flex-col items-center justify-center p-8 border border-dashed border-white/10 rounded-2xl bg-white/5 text-center">
@@ -383,6 +388,7 @@
                     </select>
                 </div>
                 <div id="topup-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <div id="topup-grid-btn-container" class="mt-12 text-center w-full hidden"></div>
 
                 <!-- Coming Soon Section Footer -->
                 <div class="mt-16 flex flex-col items-center justify-center p-8 border border-dashed border-white/10 rounded-2xl bg-white/5 text-center">
@@ -709,7 +715,17 @@
 
         const FB_LINK = "https://www.facebook.com/messages/t/222258134976104";
 
-        // --- STATE ---
+        // --- MEMORY OPTIMIZATION STATE ---
+        const ITEMS_PER_PAGE = 12;
+        let visibleCounts = {
+            'global': ITEMS_PER_PAGE,
+            'online': ITEMS_PER_PAGE,
+            'offline': ITEMS_PER_PAGE,
+            'ps': ITEMS_PER_PAGE,
+            'topup': ITEMS_PER_PAGE,
+            'search': ITEMS_PER_PAGE
+        };
+
         let currentTab = 'home';
         let isMobileMenuOpen = false;
         let cart = [];
@@ -725,7 +741,6 @@
         
         function safeStr(str) {
             if (!str) return '';
-            // Fix: Use HTML entities instead of backslashes to prevent HTML attribute breaking
             return String(str).replace(/'/g, "&#39;").replace(/"/g, "&quot;");
         }
 
@@ -755,9 +770,39 @@
         }
 
         function handleSort(datasetKey, sortType, gridId) {
+            // Reset pagination on sort
+            visibleCounts[datasetKey] = ITEMS_PER_PAGE;
+            renderGrid(datasetKey, gridId);
+        }
+
+        function loadMore(datasetKey, gridId) {
+            visibleCounts[datasetKey] += ITEMS_PER_PAGE;
+            renderGrid(datasetKey, gridId);
+        }
+
+        function renderGrid(datasetKey, gridId) {
+            const sortSelectId = datasetKey === 'global' ? 'sort-global' : `sort-${datasetKey}`;
+            const sortSelect = document.getElementById(sortSelectId);
+            const sortType = sortSelect ? sortSelect.value : 'default';
+            
             const data = datasets[datasetKey];
             const sortedData = getSortedData(data, sortType);
-            document.getElementById(gridId).innerHTML = sortedData.map(createGameCard).join('');
+            const visible = visibleCounts[datasetKey];
+            
+            const itemsToShow = sortedData.slice(0, visible);
+            document.getElementById(gridId).innerHTML = itemsToShow.map(createGameCard).join('');
+            
+            const btnContainer = document.getElementById(`${gridId}-btn-container`);
+            if (btnContainer) {
+                if (visible < sortedData.length) {
+                    btnContainer.innerHTML = `<button onclick="loadMore('${datasetKey}', '${gridId}')" class="px-8 py-3 rounded-xl border border-purple-500/30 text-purple-400 hover:bg-purple-500/10 font-bold transition-all flex items-center justify-center gap-2 mx-auto">Load More Games <i data-lucide="chevron-down" class="w-4 h-4"></i></button>`;
+                    btnContainer.classList.remove('hidden');
+                } else {
+                    btnContainer.innerHTML = '';
+                    btnContainer.classList.add('hidden');
+                }
+            }
+            
             lucide.createIcons();
         }
 
@@ -815,14 +860,14 @@
                     Lifetime Account Guarantee
                 </p>` : '';
 
-            // FIX: Added loading="lazy" to save memory and stop Safari from crashing
+            // Removed backdrop blur on badge and added loading="lazy" on images to prevent Safari crashes
             return `
             <div class="bg-[#0f0f13] border border-white/10 rounded-2xl overflow-hidden hover:-translate-y-2 hover:border-purple-500/50 hover:shadow-[0_10px_30px_rgba(168,85,247,0.15)] transition-all duration-300 group flex flex-col h-full relative animate-fade-up">
                 <div class="relative h-56 overflow-hidden">
                     ${discountHTML}
                     <img src="${item.img}" loading="lazy" alt="${safeStr(item.title)}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-80 group-hover:opacity-100" />
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0f0f13] via-transparent to-transparent opacity-90"></div>
-                    <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5 shadow-lg z-10">
+                    <div class="absolute top-3 right-3 bg-[#0a0a0a]/90 px-3 py-1.5 rounded-full text-xs font-bold text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5 shadow-lg z-10">
                         <i data-lucide="check-circle-2" class="w-3 h-3"></i> ${item.desc.split(' • ')[0]}
                     </div>
                 </div>
@@ -852,21 +897,12 @@
         }
 
         function renderGrids() {
-            // FIX: Replaced optional chaining (?.) with standard ternary to support older iOS Safari
-            const sortGlobal = document.getElementById('sort-global');
-            handleSort('global', sortGlobal ? sortGlobal.value : 'default', 'home-grid');
-            
-            const sortOnline = document.getElementById('sort-online');
-            handleSort('online', sortOnline ? sortOnline.value : 'default', 'online-grid');
-            
-            const sortOffline = document.getElementById('sort-offline');
-            handleSort('offline', sortOffline ? sortOffline.value : 'default', 'offline-grid');
-            
-            const sortPs = document.getElementById('sort-ps');
-            handleSort('ps', sortPs ? sortPs.value : 'default', 'ps-grid');
-            
-            const sortTopup = document.getElementById('sort-topup');
-            handleSort('topup', sortTopup ? sortTopup.value : 'default', 'topup-grid');
+            // Initial render only triggers the active tab to save memory
+            if(currentTab === 'home') renderGrid('global', 'home-grid');
+            else if(currentTab === 'online') renderGrid('online', 'online-grid');
+            else if(currentTab === 'offline') renderGrid('offline', 'offline-grid');
+            else if(currentTab === 'ps') renderGrid('ps', 'ps-grid');
+            else if(currentTab === 'topup') renderGrid('topup', 'topup-grid');
         }
 
         function renderNav() {
@@ -900,13 +936,11 @@
             isMobileMenuOpen = false;
             document.getElementById('mobile-dropdown').classList.add('hidden');
             
-            // FIX: reset mobile icon back to hamburger safely
             const mobileIcon = document.getElementById('mobile-menu-icon');
             if (mobileIcon) {
                 mobileIcon.setAttribute('data-lucide', 'menu');
             }
             
-            // Clear search
             searchQuery = '';
             document.getElementById('desktop-search').value = '';
             document.getElementById('mobile-search').value = '';
@@ -916,6 +950,30 @@
                 document.getElementById(view).classList.add('hidden');
             });
             document.getElementById(`view-${id}`).classList.remove('hidden');
+            
+            // To prevent mobile Safari crashes, clear memory of hidden grids
+            const gridIds = ['home-grid', 'online-grid', 'offline-grid', 'ps-grid', 'topup-grid', 'search-grid'];
+            gridIds.forEach(gid => {
+                const el = document.getElementById(gid);
+                if(el) el.innerHTML = '';
+            });
+
+            // Reset pagination
+            visibleCounts = {
+                'global': ITEMS_PER_PAGE,
+                'online': ITEMS_PER_PAGE,
+                'offline': ITEMS_PER_PAGE,
+                'ps': ITEMS_PER_PAGE,
+                'topup': ITEMS_PER_PAGE,
+                'search': ITEMS_PER_PAGE
+            };
+            
+            // Render only the active tab
+            if(id === 'home') renderGrid('global', 'home-grid');
+            else if(id === 'online') renderGrid('online', 'online-grid');
+            else if(id === 'offline') renderGrid('offline', 'offline-grid');
+            else if(id === 'ps') renderGrid('ps', 'ps-grid');
+            else if(id === 'topup') renderGrid('topup', 'topup-grid');
             
             window.scrollTo(0, 0);
             renderNav();
@@ -940,9 +998,15 @@
             datasets.search = results;
             document.getElementById('search-subtitle').innerText = `${results.length} games found`;
             
-            // FIX: Removed optional chaining
-            const sortSearch = document.getElementById('sort-search');
-            handleSort('search', sortSearch ? sortSearch.value : 'default', 'search-grid');
+            // Clear memory of background grids
+            const gridIds = ['home-grid', 'online-grid', 'offline-grid', 'ps-grid', 'topup-grid'];
+            gridIds.forEach(gid => {
+                const el = document.getElementById(gid);
+                if(el) el.innerHTML = '';
+            });
+
+            visibleCounts['search'] = ITEMS_PER_PAGE;
+            renderGrid('search', 'search-grid');
         }
 
         function toggleMobileMenu() {
