@@ -405,27 +405,35 @@
     <!-- REDESIGNED FOOTER -->
     <footer class="bg-gradient-to-r from-[#0a0a1a] to-[#020202] py-16 border-t border-white/10 mt-12 relative overflow-hidden">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-5 mix-blend-overlay"></div>
-        <div class="max-w-7xl mx-auto px-4 relative z-10 grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center">
+        <div class="max-w-7xl mx-auto px-4 relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 items-start text-center lg:text-left">
             
+            <!-- About Us Column -->
+            <div class="flex flex-col items-center lg:items-start space-y-4">
+                <h3 class="text-2xl font-serif font-bold text-white mb-2 underline decoration-cyan-400 underline-offset-8">About Us</h3>
+                <p class="text-slate-400 leading-relaxed text-sm md:text-base">
+                    Emon's Games Gallery is your trusted source for premium gaming in Bangladesh. We deliver lifetime online and offline activations, global product keys, and game top-ups at unbeatable prices.
+                </p>
+            </div>
+
             <!-- Contact Us Column -->
-            <div class="flex flex-col items-center justify-center space-y-3">
-                <h3 class="text-3xl font-serif font-bold text-white mb-4 underline decoration-purple-500 underline-offset-8">Contact us</h3>
-                <p class="text-lg font-medium text-white">Gmail: <a href="mailto:zonge941@gmail.com" class="hover:text-cyan-400 transition-colors">zonge941@gmail.com</a></p>
-                <p class="text-lg font-medium text-white">Contact Number : <a href="tel:01679386441" class="hover:text-cyan-400 transition-colors">01679386441</a></p>
+            <div class="flex flex-col items-center lg:items-start space-y-4">
+                <h3 class="text-2xl font-serif font-bold text-white mb-2 underline decoration-purple-500 underline-offset-8">Contact us</h3>
+                <p class="text-lg font-medium text-slate-300">Gmail: <br class="hidden lg:block"/><a href="mailto:zonge941@gmail.com" class="text-white hover:text-cyan-400 transition-colors text-base">zonge941@gmail.com</a></p>
+                <p class="text-lg font-medium text-slate-300">Phone: <br class="hidden lg:block"/><a href="tel:01679386441" class="text-white hover:text-cyan-400 transition-colors text-base">01679386441</a></p>
             </div>
 
             <!-- Logo & Page Column -->
-            <div class="flex flex-col items-center justify-center">
-                <img src="https://scontent.fdac207-1.fna.fbcdn.net/v/t39.30808-6/310103902_569057451710739_6153540400180205062_n.png?_nc_cat=105&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=bq_BhAOC8qwQ7kNvwFOGXDq&_nc_oc=AdkMFiamraPezkGr2CnFwtNWgpW7V6whomSf8O4FGrtco_aBVAplDBekCdbQ3UvdO0s&_nc_zt=23&_nc_ht=scontent.fdac207-1.fna&_nc_gid=iL2__E8S_N0hyWjH0SvC7A&_nc_ss=8&oh=00_AfxF2toB2uvkhnJt4nsmlZH50rna5ZKXap1O7ozvJ01FLQ&oe=69BCFB22" alt="Logo" class="w-40 h-auto object-cover rounded-2xl border border-white/10 shadow-2xl mb-6 hover:scale-105 transition-transform" />
-                <a href="https://www.facebook.com/messages/t/222258134976104" target="_blank" class="text-xl font-bold text-white underline decoration-2 decoration-cyan-400 underline-offset-4 hover:text-cyan-400 transition-colors">Join Facebook Page</a>
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <img src="https://scontent.fdac207-1.fna.fbcdn.net/v/t39.30808-6/310103902_569057451710739_6153540400180205062_n.png?_nc_cat=105&ccb=1-7&_nc_sid=1d70fc&_nc_ohc=bq_BhAOC8qwQ7kNvwFOGXDq&_nc_oc=AdkMFiamraPezkGr2CnFwtNWgpW7V6whomSf8O4FGrtco_aBVAplDBekCdbQ3UvdO0s&_nc_zt=23&_nc_ht=scontent.fdac207-1.fna&_nc_gid=iL2__E8S_N0hyWjH0SvC7A&_nc_ss=8&oh=00_AfxF2toB2uvkhnJt4nsmlZH50rna5ZKXap1O7ozvJ01FLQ&oe=69BCFB22" alt="Logo" class="w-32 h-auto object-cover rounded-2xl border border-white/10 shadow-2xl hover:scale-105 transition-transform" />
+                <a href="https://www.facebook.com/messages/t/222258134976104" target="_blank" class="text-lg font-bold text-white underline decoration-2 decoration-cyan-400 underline-offset-4 hover:text-cyan-400 transition-colors">Join Facebook Page</a>
             </div>
 
             <!-- Gaming Burst & Group Column -->
-            <div class="flex flex-col items-center justify-center">
-                <div class="w-56 h-36 mx-auto sunburst-bg flex items-center justify-center rounded-xl border-[5px] border-white shadow-[0_0_20px_rgba(250,204,21,0.4)] mb-6 hover:rotate-3 transition-transform cursor-pointer">
-                    <span class="font-black text-3xl text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.9)] -rotate-6 tracking-tight leading-tight">We <br>Love <br>Gaming</span>
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <div class="w-48 h-32 mx-auto sunburst-bg flex items-center justify-center rounded-xl border-[4px] border-white shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:rotate-3 transition-transform cursor-pointer">
+                    <span class="font-black text-2xl text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.9)] -rotate-6 tracking-tight leading-tight">We <br>Love <br>Gaming</span>
                 </div>
-                <a href="#" target="_blank" class="text-xl font-bold text-white underline decoration-2 decoration-purple-500 underline-offset-4 hover:text-purple-400 transition-colors">Join our Facebook Group</a>
+                <a href="#" target="_blank" class="text-lg font-bold text-white underline decoration-2 decoration-purple-500 underline-offset-4 hover:text-purple-400 transition-colors">Join Facebook Group</a>
             </div>
 
         </div>
