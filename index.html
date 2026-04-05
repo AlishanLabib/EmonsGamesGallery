@@ -105,7 +105,7 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             border: none;
-            opacity: 0.6;
+            opacity: 1; /* Increased opacity to 1 for full visibility */
         }
 
         /* ===== FULL PAGE CART ===== */
@@ -290,9 +290,9 @@
                     </iframe>
                 </div>
 
-                <!-- Overlays for readability -->
-                <div class="absolute inset-0 bg-gradient-to-b from-[#050505]/60 via-[#050505]/40 to-[#050505] z-[1]"></div>
-                <div class="absolute inset-0 bg-[radial-gradient(circle,transparent_0%,#050505_100%)] opacity-80 z-[1]"></div>
+                <!-- Lighter overlays for better visibility of the video -->
+                <div class="absolute inset-0 bg-gradient-to-b from-[#050505]/40 via-[#050505]/10 to-[#050505] z-[1]"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(circle,transparent_0%,#050505_100%)] opacity-50 z-[1]"></div>
 
                 <!-- Subtle vignette radial overlays -->
                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(147,51,234,0.08)_0%,transparent_70%)] rounded-full pointer-events-none z-[2]"></div>
