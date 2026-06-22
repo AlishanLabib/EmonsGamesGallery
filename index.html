@@ -11,151 +11,8 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            color: white;
-            scroll-behavior: smooth;
-        }
-
-        ::selection {
-            background-color: #a855f7;
-            color: white;
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes pulseGlow {
-            0%, 100% { text-shadow: 0 0 10px rgba(168,85,247,0.5); }
-            50% { text-shadow: 0 0 20px rgba(168,85,247,1), 0 0 30px rgba(34,211,238,0.8); }
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fade-up {
-            animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-        }
-        
-        .animate-glow {
-            animation: pulseGlow 3s infinite;
-        }
-        
-        .delay-100 { animation-delay: 100ms; }
-        .delay-200 { animation-delay: 200ms; }
-        .delay-300 { animation-delay: 300ms; }
-        
-        .glass-nav {
-            background: rgba(10, 10, 10, 0.8);
-            -webkit-backdrop-filter: blur(16px);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Hide scrollbar for cleaner look in sidebars */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
-
-        /* Custom Select Styling */
-        select option {
-            background-color: #0f0f13;
-            color: white;
-        }
-
-        .sunburst-bg {
-            background: repeating-conic-gradient(
-                #ef4444 0 15deg,
-                #facc15 15deg 30deg
-            );
-        }
-
-        /* ===== STREAMABLE VIDEO HERO ===== */
-        .hero-video-container {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            z-index: 0;
-        }
-        
-        /* Forces the iframe to cover the entire container without black bars */
-        .hero-video-container iframe {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300vw;
-            height: 300vh;
-            max-width: none;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            border: none;
-            opacity: 1; /* Increased opacity to 1 for full visibility */
-        }
-
-        /* ===== FULL PAGE CART ===== */
-        #cart-fullpage {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        #cart-fullpage.open { display: flex; }
-        #cart-fullpage-inner {
-            animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
-        }
-
-        /* ===== TERMS MODAL ===== */
-        #terms-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 300;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            animation: fadeIn 0.3s ease;
-        }
-        #terms-modal.open { display: flex; }
-
-        /* ===== AUTH MODAL ===== */
-        #auth-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 300;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
-            animation: fadeIn 0.3s ease;
-        }
-        #auth-modal.open { display: flex; }
-
-        /* Footer glow line */
-        .footer-glow-line {
-            height: 1px;
-            background: linear-gradient(to right, transparent, rgba(168,85,247,0.5), rgba(34,211,238,0.5), transparent);
-        }
-
-        .dev-badge {
-            background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(34,211,238,0.1));
-            border: 1px solid rgba(168,85,247,0.25);
-        }
-    </style>
+    <!-- Site styles + fluid animation layer -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="pb-20 md:pb-0">
 
@@ -1518,5 +1375,8 @@
             setTimeout(loadVideo, 800);
         };
     </script>
+
+    <!-- Fluid UI/UX animation enhancement layer (additive, non-blocking) -->
+    <script src="animations.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,308 @@
+/* =========================================================
+   Emon's Games Gallery — Stylesheet
+   Section 1: Original styles (moved from inline <style>)
+   Section 2: Enhanced fluid UI/UX animation layer
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
+
+/* =========================================================
+   SECTION 1 — ORIGINAL STYLES
+   ========================================================= */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #050505;
+    color: white;
+    scroll-behavior: smooth;
+}
+
+::selection {
+    background-color: #a855f7;
+    color: white;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(168,85,247,0.5); }
+    50% { text-shadow: 0 0 20px rgba(168,85,247,1), 0 0 30px rgba(34,211,238,0.8); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+    animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+.animate-glow {
+    animation: pulseGlow 3s infinite;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+
+.glass-nav {
+    background: rgba(10, 10, 10, 0.8);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Hide scrollbar for cleaner look in sidebars */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* Custom Select Styling */
+select option {
+    background-color: #0f0f13;
+    color: white;
+}
+
+.sunburst-bg {
+    background: repeating-conic-gradient(
+        #ef4444 0 15deg,
+        #facc15 15deg 30deg
+    );
+}
+
+/* ===== STREAMABLE VIDEO HERO ===== */
+.hero-video-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+/* Forces the iframe to cover the entire container without black bars */
+.hero-video-container iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300vw;
+    height: 300vh;
+    max-width: none;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border: none;
+    opacity: 1; /* Increased opacity to 1 for full visibility */
+}
+
+/* ===== FULL PAGE CART ===== */
+#cart-fullpage {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+#cart-fullpage.open { display: flex; }
+#cart-fullpage-inner {
+    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+
+/* ===== TERMS MODAL ===== */
+#terms-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease;
+}
+#terms-modal.open { display: flex; }
+
+/* ===== AUTH MODAL ===== */
+#auth-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease;
+}
+#auth-modal.open { display: flex; }
+
+/* Footer glow line */
+.footer-glow-line {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(168,85,247,0.5), rgba(34,211,238,0.5), transparent);
+}
+
+.dev-badge {
+    background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(34,211,238,0.1));
+    border: 1px solid rgba(168,85,247,0.25);
+}
+
+/* =========================================================
+   SECTION 2 — ENHANCED FLUID ANIMATION LAYER
+   Smooth, GPU-friendly micro-interactions.
+   Everything here is additive; removing this section
+   leaves the original site fully functional.
+   ========================================================= */
+
+:root {
+    --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --reveal-distance: 30px;
+}
+
+/* Smoother native scrolling + nicer text rendering */
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+/* ---------- Scroll progress bar (injected by animations.js) ---------- */
+#scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    z-index: 300;
+    background: linear-gradient(to right, #a855f7, #22d3ee);
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.7);
+    transition: width 0.1s linear;
+    pointer-events: none;
+}
+
+/* ---------- Scroll reveal (added via JS: [data-reveal] -> .reveal-in) ---------- */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance)) scale(0.98);
+    filter: blur(6px);
+    transition:
+        opacity 0.8s var(--ease-out-soft),
+        transform 0.8s var(--ease-out-soft),
+        filter 0.8s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+}
+[data-reveal].reveal-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+
+/* ---------- Staggered card entrance (game cards) ---------- */
+/* The grids inject cards dynamically; animations.js tags each with --stagger. */
+.card-stagger {
+    animation: cardIn 0.65s var(--ease-out-soft) both;
+    animation-delay: var(--stagger, 0ms);
+}
+@keyframes cardIn {
+    from { opacity: 0; transform: translateY(34px) scale(0.96); filter: blur(4px); }
+    to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* ---------- 3D tilt + shine sweep for interactive cards ---------- */
+.tilt-card {
+    transform-style: preserve-3d;
+    transition: transform 0.35s var(--ease-out-soft), box-shadow 0.35s var(--ease-out-soft);
+    will-change: transform;
+}
+/* Glossy light sweep that follows hover */
+.tilt-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+        600px circle at var(--mx, 50%) var(--my, 0%),
+        rgba(255, 255, 255, 0.10),
+        transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+.tilt-card:hover::after { opacity: 1; }
+
+/* ---------- Animated gradient text (drop-in upgrade) ---------- */
+.text-shimmer {
+    background-size: 200% auto;
+    animation: shimmerSlide 4s linear infinite;
+}
+@keyframes shimmerSlide {
+    to { background-position: 200% center; }
+}
+
+/* ---------- Button ripple (injected span by animations.js) ---------- */
+button { position: relative; overflow: hidden; }
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: rippleExpand 0.6s ease-out;
+    background: rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+    z-index: 1;
+}
+@keyframes rippleExpand {
+    to { transform: scale(3.2); opacity: 0; }
+}
+/* Keep the cart/checkout overflow-hidden buttons from clipping their badge:
+   the cart-count badge sits on a button; allow it to show. */
+nav button { overflow: visible; }
+
+/* ---------- Soft floating loop for orbs / badges ---------- */
+.float-soft { animation: floatSoft 6s ease-in-out infinite; }
+@keyframes floatSoft {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ---------- Navbar shrink on scroll (class toggled by JS) ---------- */
+nav.nav-scrolled {
+    background: rgba(8, 8, 10, 0.92);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+nav.nav-scrolled .h-20 { height: 4rem; }
+nav .h-20 { transition: height 0.35s var(--ease-out-soft); }
+
+/* ---------- Smooth focus ring for inputs ---------- */
+input:focus { box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.18); }
+
+/* ---------- Generic smooth interaction helpers ---------- */
+a, button { transition: color 0.25s ease, background-color 0.25s ease, transform 0.25s var(--ease-out-soft), box-shadow 0.3s ease; }
+
+/* Lift + glow on primary gradient buttons */
+.btn-lift:hover { transform: translateY(-2px); }
+
+/* ---------- Image reveal: gentle zoom settle on load ---------- */
+img { transition: opacity 0.5s ease; }
+
+/* =========================================================
+   ACCESSIBILITY — respect reduced motion
+   Disables all the heavy motion above for users who ask.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    [data-reveal] { opacity: 1 !important; transform: none !important; filter: none !important; }
+    .card-stagger { animation: none !important; opacity: 1 !important; }
+}
