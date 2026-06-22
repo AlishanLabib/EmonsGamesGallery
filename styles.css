@@ -218,16 +218,22 @@ body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; 
     transition: transform 0.35s var(--ease-out-soft), box-shadow 0.35s var(--ease-out-soft);
     will-change: transform;
 }
-/* Glossy light sweep that follows hover */
+/* Clearly visible glow ring + lift on hover */
+.tilt-card:hover {
+    box-shadow:
+        0 18px 45px rgba(168, 85, 247, 0.35),
+        0 0 0 1px rgba(168, 85, 247, 0.5);
+}
+/* Glossy light sweep that follows the cursor */
 .tilt-card::after {
     content: "";
     position: absolute;
     inset: 0;
     border-radius: inherit;
     background: radial-gradient(
-        600px circle at var(--mx, 50%) var(--my, 0%),
-        rgba(255, 255, 255, 0.10),
-        transparent 40%
+        500px circle at var(--mx, 50%) var(--my, 0%),
+        rgba(255, 255, 255, 0.18),
+        transparent 45%
     );
     opacity: 0;
     transition: opacity 0.4s ease;

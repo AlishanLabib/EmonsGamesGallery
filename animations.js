@@ -146,7 +146,7 @@
        ---------------------------------------------------------------- */
     function initTilt() {
         if (reduceMotion) return;
-        var MAX = 7; // degrees
+        var MAX = 9; // degrees of tilt
 
         document.addEventListener("pointermove", function (e) {
             var card = e.target.closest && e.target.closest(".tilt-card");
