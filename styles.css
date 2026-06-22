@@ -8,14 +8,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
 
 /* =========================================================
+   SECTION 0 — THEME SYSTEM (dark default + light + system)
+   Semantic CSS variables drive the structural chrome so the
+   site can switch themes. Accent colors (purple/cyan/badges)
+   stay as Tailwind utilities in both themes.
+   ========================================================= */
+
+/* Dark is the default (also applied via html.dark) */
+:root,
+html.dark {
+    --bg: #050505;
+    --surface: #0f0f13;
+    --surface-2: #0a0a0f;
+    --surface-3: #050508;
+    --text: #ffffff;
+    --text-muted: #94a3b8;   /* slate-400 */
+    --text-subtle: #64748b;  /* slate-500 */
+    --border: rgba(255, 255, 255, 0.10);
+    --glass-nav-bg: rgba(10, 10, 10, 0.80);
+    --glass-nav-border: rgba(255, 255, 255, 0.06);
+    color-scheme: dark;
+}
+
+html.light {
+    --bg: #f4f5fa;
+    --surface: #ffffff;
+    --surface-2: #ffffff;
+    --surface-3: #eef0f6;
+    --text: #0f172a;         /* slate-900 */
+    --text-muted: #475569;   /* slate-600 */
+    --text-subtle: #64748b;  /* slate-500 */
+    --border: rgba(15, 23, 42, 0.12);
+    --glass-nav-bg: rgba(255, 255, 255, 0.85);
+    --glass-nav-border: rgba(15, 23, 42, 0.08);
+    color-scheme: light;
+}
+
+/* Semantic surface / text / border helpers used by injected chrome + cards */
+.bg-app    { background-color: var(--bg); }
+.surface   { background-color: var(--surface); }
+.surface-2 { background-color: var(--surface-2); }
+.surface-3 { background-color: var(--surface-3); }
+.text-base   { color: var(--text); }
+.text-muted  { color: var(--text-muted); }
+.text-subtle { color: var(--text-subtle); }
+.border-base { border: 1px solid var(--border); }
+/* allow hover:text-base / hover:text-muted utility-style usage */
+.hover\:text-base:hover  { color: var(--text); }
+.hover\:text-muted:hover { color: var(--text-muted); }
+
+/* Themed scrollbar in light mode */
+html.light ::-webkit-scrollbar-thumb { background: #cbd5e1; }
+html.light ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* =========================================================
    SECTION 1 — ORIGINAL STYLES
    ========================================================= */
 
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #050505;
-    color: white;
+    background-color: var(--bg);
+    color: var(--text);
     scroll-behavior: smooth;
+    transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 ::selection {
@@ -57,10 +112,10 @@ body {
 .delay-300 { animation-delay: 300ms; }
 
 .glass-nav {
-    background: rgba(10, 10, 10, 0.8);
+    background: var(--glass-nav-bg);
     -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--glass-nav-border);
 }
 
 /* Hide scrollbar for cleaner look in sidebars */
@@ -278,8 +333,8 @@ nav button { overflow: visible; }
 
 /* ---------- Navbar shrink on scroll (class toggled by JS) ---------- */
 nav.nav-scrolled {
-    background: rgba(8, 8, 10, 0.92);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    background: var(--glass-nav-bg);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
 }
 nav.nav-scrolled .h-20 { height: 4rem; }
 nav .h-20 { transition: height 0.35s var(--ease-out-soft); }
@@ -295,6 +350,36 @@ a, button { transition: color 0.25s ease, background-color 0.25s ease, transform
 
 /* ---------- Image reveal: gentle zoom settle on load ---------- */
 img { transition: opacity 0.5s ease; }
+
+/* ---------- Page entrance (whole main fades/rises in) ---------- */
+main { animation: pageIn 0.6s var(--ease-out-soft) both; }
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Game detail entrance ---------- */
+.detail-enter { animation: detailIn 0.7s var(--ease-out-soft) both; }
+@keyframes detailIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.99); filter: blur(4px); }
+    to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* ---------- Animated theme-toggle icon swap ---------- */
+[data-theme-icon] { transition: transform 0.4s var(--ease-out-back); }
+[data-theme-icon]:hover { transform: rotate(25deg) scale(1.12); }
+
+/* ---------- Sort <select> themed for light + dark ---------- */
+select {
+    background-color: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+html.light select option { background-color: #ffffff; color: #0f172a; }
+
+/* ---------- Card surface gets a soft themed shadow ---------- */
+.gg-card { box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset; }
+html.light .gg-card { box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06); }
 
 /* =========================================================
    ACCESSIBILITY — respect reduced motion

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Details — Emon's Games Gallery</title>
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("gg_theme") || "dark";
+                var d = t === "system" ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : t;
+                document.documentElement.classList.add(d);
+            } catch (e) { document.documentElement.classList.add("dark"); }
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: "class" };</script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=4">
+    <script src="data.js?v=4" defer></script>
+    <script src="app.js?v=4" defer></script>
+    <script src="animations.js?v=4" defer></script>
+</head>
+<body data-page="game" class="bg-app pb-20 md:pb-0">
+    <div id="site-header"></div>
+    <main class="pt-28 pb-12">
+        <div class="px-4 md:px-8 max-w-6xl mx-auto">
+            <div id="game-detail"></div>
+            <div id="related-section" class="hidden mt-20">
+                <h2 class="text-2xl font-extrabold text-base mb-8 flex items-center gap-3"><i data-lucide="layout-grid" class="text-purple-500 w-7 h-7"></i> More like this</h2>
+                <div id="related-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+            </div>
+        </div>
+    </main>
+    <div id="site-footer"></div>
+    <div id="site-modals"></div>
+</body>
+</html>

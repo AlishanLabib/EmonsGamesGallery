@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search — Emon's Games Gallery</title>
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem("gg_theme") || "dark";
+                var d = t === "system" ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : t;
+                document.documentElement.classList.add(d);
+            } catch (e) { document.documentElement.classList.add("dark"); }
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: "class" };</script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css?v=4">
+    <script src="data.js?v=4" defer></script>
+    <script src="app.js?v=4" defer></script>
+    <script src="animations.js?v=4" defer></script>
+</head>
+<body data-page="search" class="bg-app pb-20 md:pb-0">
+    <div id="site-header"></div>
+    <main class="pt-28 pb-12">
+        <div class="py-8 px-4 md:px-8 max-w-7xl mx-auto">
+            <div class="mb-12 text-center">
+                <h2 id="search-title" class="text-3xl md:text-5xl font-extrabold text-base mb-3">Search</h2>
+                <h3 id="search-subtitle" class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 mb-4">0 games found</h3>
+            </div>
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-muted font-semibold hidden sm:block">Filter by:</span>
+                <select id="sort-search" onchange="GG.handleSort('search','search-grid')" class="w-full sm:w-auto text-sm font-semibold rounded-xl p-3 outline-none cursor-pointer">
+                        <option value="default">Default Sorting</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="name-asc">Name: A-Z</option>
+                        <option value="name-desc">Name: Z-A</option>
+                    </select>
+            </div>
+            <div id="search-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+            <div id="search-grid-btn-container" class="mt-12 text-center w-full hidden"></div>
+        </div>
+    </main>
+    <div id="site-footer"></div>
+    <div id="site-modals"></div>
+</body>
+</html>

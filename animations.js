@@ -111,7 +111,7 @@
           + tag them for 3D tilt. Uses MutationObserver because the
           grids are filled via innerHTML after render / tab switch.
        ---------------------------------------------------------------- */
-    var GRID_IDS = ["home-grid", "online-grid", "offline-grid", "ps-grid", "topup-grid", "search-grid"];
+    var GRID_IDS = ["home-grid", "online-grid", "offline-grid", "ps-grid", "topup-grid", "search-grid", "related-grid"];
 
     function decorateCards(grid) {
         // Direct children are the card wrappers produced by createGameCard.
