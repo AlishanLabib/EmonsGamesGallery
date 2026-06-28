@@ -77,6 +77,9 @@
     var FB_GROUP_URL = "https://www.facebook.com/groups/507789342967237";
     var DEV_URL = "https://alishanbhuiyan.netlify.app/";
 
+    // Shorter labels for the cramped inline (desktop) nav; full labels on mobile.
+    var NAV_SHORT = { home: "Home", online: "Online", offline: "Offline", ps: "PS", topup: "Top Up" };
+
     function navLinksHTML(mobile) {
         var page = currentPage();
         return navItems.map(function (item) {
@@ -88,9 +91,10 @@
                     (active ? "bg-gradient-to-r from-purple-600/20 to-transparent text-purple-400 border-l-4 border-purple-500" : "text-muted hover:bg-black/5 dark:hover:bg-white/5 hover:text-base") +
                     '"><i data-lucide="' + item.icon + '" class="w-5 h-5"></i> ' + item.label + "</a>";
             }
-            return '<a href="' + href + '" class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ' +
+            var lbl = NAV_SHORT[item.id] || item.label;
+            return '<a href="' + href + '" title="' + item.label + '" class="flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap ' +
                 (active ? "bg-purple-500/10 text-purple-400" : "text-muted hover:text-base hover:bg-black/5 dark:hover:bg-white/5") +
-                '"><i data-lucide="' + item.icon + '" class="w-4 h-4"></i> ' + item.label + "</a>";
+                '"><i data-lucide="' + item.icon + '" class="w-4 h-4"></i> ' + lbl + "</a>";
         }).join("");
     }
 
@@ -104,20 +108,20 @@
                 '<img src="' + LOGO + '" alt="Logo" class="w-10 h-10 md:w-12 md:h-12 rounded-xl group-hover:scale-110 transition-transform object-cover shadow-lg border border-white/10" />' +
                 '<span class="font-extrabold text-lg md:text-xl tracking-tight hidden sm:block text-base">Emon\'s <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Games Gallery</span></span>' +
               '</a>' +
-              '<form action="search.html" method="get" onsubmit="return GG.doSearch(this)" class="flex-1 max-w-md relative hidden sm:block">' +
+              '<form action="search.html" method="get" onsubmit="return GG.doSearch(this)" class="flex-1 min-w-[150px] max-w-md relative hidden sm:block">' +
                 '<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i data-lucide="search" class="h-4 w-4 text-muted"></i></div>' +
                 '<input type="text" name="q" id="desktop-search" placeholder="Search games..." autocomplete="off" oninput="GG.liveSearch(this.value)" class="w-full surface-2 border-base rounded-full py-2 pl-10 pr-4 text-sm text-base focus:outline-none focus:border-purple-500/50 transition-all placeholder:text-subtle" />' +
               '</form>' +
-              '<div class="hidden lg:flex items-center space-x-1 shrink-0">' + navLinksHTML(false) + '</div>' +
+              '<div class="hidden xl:flex items-center space-x-1 shrink-0">' + navLinksHTML(false) + '</div>' +
               '<div class="flex items-center gap-1 sm:gap-3 shrink-0">' +
                 '<button onclick="GG.cycleTheme()" class="p-2 text-muted hover:text-base transition-colors" title="Toggle theme"><i data-lucide="' + themeIcon(pref) + '" data-theme-icon class="w-6 h-6"></i></button>' +
                 '<button onclick="GG.openAuthModal()" class="p-2 text-muted hover:text-base transition-colors" title="Account"><span id="auth-icon-desktop"><i data-lucide="log-in" class="w-6 h-6"></i></span></button>' +
                 '<button onclick="GG.toggleCart()" class="relative p-2 text-muted hover:text-base transition-colors"><i data-lucide="shopping-cart" class="w-6 h-6"></i><span id="cart-count-badge" class="hidden absolute top-0 right-0 bg-purple-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-[var(--bg)]">0</span></button>' +
-                '<div class="lg:hidden"><button onclick="GG.toggleMobileMenu()" class="text-muted hover:text-base p-2"><i id="mobile-menu-icon" data-lucide="menu" class="w-7 h-7"></i></button></div>' +
+                '<div class="xl:hidden"><button onclick="GG.toggleMobileMenu()" class="text-muted hover:text-base p-2"><i id="mobile-menu-icon" data-lucide="menu" class="w-7 h-7"></i></button></div>' +
               '</div>' +
             '</div>' +
           '</div>' +
-          '<div id="mobile-dropdown" class="hidden lg:hidden absolute top-20 left-0 w-full surface border-b border-base shadow-2xl px-4 py-4 space-y-4">' +
+          '<div id="mobile-dropdown" class="hidden xl:hidden absolute top-20 left-0 w-full surface border-b border-base shadow-2xl px-4 py-4 space-y-4">' +
             '<form action="search.html" method="get" onsubmit="return GG.doSearch(this)" class="relative">' +
               '<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i data-lucide="search" class="h-4 w-4 text-muted"></i></div>' +
               '<input type="text" name="q" id="mobile-search" placeholder="Search games..." autocomplete="off" oninput="GG.liveSearch(this.value)" class="w-full surface-2 border-base rounded-xl py-3 pl-10 pr-4 text-sm text-base focus:outline-none focus:border-purple-500/50 transition-all placeholder:text-subtle" />' +
