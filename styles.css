@@ -381,6 +381,34 @@ html.light select option { background-color: #ffffff; color: #0f172a; }
 .gg-card { box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset; }
 html.light .gg-card { box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06); }
 
+/* ---------- Developer name: animated gradient + underline + glow ---------- */
+.dev-name {
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(34, 211, 238, 0.7);
+    background: linear-gradient(90deg, #a855f7, #22d3ee, #f0abfc, #a855f7);
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: devNameSlide 3.5s linear infinite, devNamePulse 2.5s ease-in-out infinite;
+    transition: transform 0.3s var(--ease-out-back), filter 0.3s ease;
+    display: inline-block;
+}
+.dev-name:hover {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.8));
+    text-decoration-color: #f0abfc;
+}
+@keyframes devNameSlide { to { background-position: 250% center; } }
+@keyframes devNamePulse {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba(168, 85, 247, 0.4)); }
+    50% { filter: drop-shadow(0 0 9px rgba(34, 211, 238, 0.7)); }
+}
+
 /* =========================================================
    ACCESSIBILITY — respect reduced motion
    Disables all the heavy motion above for users who ask.

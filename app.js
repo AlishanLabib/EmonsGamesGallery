@@ -23,6 +23,16 @@
     function priceNum(p) { var n = parseInt(p, 10); return isNaN(n) ? 0 : n; }
     function currentPage() { return (document.body && document.body.getAttribute("data-page")) || "home"; }
 
+    /* Branded placeholder shown if any cover image fails to load (no broken icons) */
+    window.GG_FALLBACK = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(
+        "<svg xmlns='http://www.w3.org/2000/svg' width='600' height='900'>" +
+        "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#1b1233'/><stop offset='1' stop-color='#0a0a0f'/></linearGradient></defs>" +
+        "<rect width='600' height='900' fill='url(#g)'/>" +
+        "<text x='300' y='430' fill='#a855f7' font-family='Arial,sans-serif' font-size='44' font-weight='bold' text-anchor='middle'>Emon's Games</text>" +
+        "<text x='300' y='490' fill='#64748b' font-family='Arial,sans-serif' font-size='26' text-anchor='middle'>Image coming soon</text></svg>"
+    );
+    var IMG_ERR = ' onerror="this.onerror=null;this.src=window.GG_FALLBACK"';
+
     /* =========================================================
        THEME MANAGER  (dark default, + light + system)
        ========================================================= */
@@ -63,6 +73,9 @@
        SHARED CHROME — header / footer / modals (one source)
        ========================================================= */
     var LOGO = "https://images2.imgbox.com/5b/09/BSHH2B04_o.jpg";
+    var FB_PAGE_URL = "https://www.facebook.com/emongaming.01";
+    var FB_GROUP_URL = "https://www.facebook.com/groups/507789342967237";
+    var DEV_URL = "https://alishanbhuiyan.netlify.app/";
 
     function navLinksHTML(mobile) {
         var page = currentPage();
@@ -91,9 +104,9 @@
                 '<img src="' + LOGO + '" alt="Logo" class="w-10 h-10 md:w-12 md:h-12 rounded-xl group-hover:scale-110 transition-transform object-cover shadow-lg border border-white/10" />' +
                 '<span class="font-extrabold text-lg md:text-xl tracking-tight hidden sm:block text-base">Emon\'s <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Games Gallery</span></span>' +
               '</a>' +
-              '<form action="search.html" method="get" class="flex-1 max-w-md relative hidden sm:block">' +
+              '<form action="search.html" method="get" onsubmit="return GG.doSearch(this)" class="flex-1 max-w-md relative hidden sm:block">' +
                 '<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i data-lucide="search" class="h-4 w-4 text-muted"></i></div>' +
-                '<input type="text" name="q" id="desktop-search" placeholder="Search games..." autocomplete="off" class="w-full surface-2 border-base rounded-full py-2 pl-10 pr-4 text-sm text-base focus:outline-none focus:border-purple-500/50 transition-all placeholder:text-subtle" />' +
+                '<input type="text" name="q" id="desktop-search" placeholder="Search games..." autocomplete="off" oninput="GG.liveSearch(this.value)" class="w-full surface-2 border-base rounded-full py-2 pl-10 pr-4 text-sm text-base focus:outline-none focus:border-purple-500/50 transition-all placeholder:text-subtle" />' +
               '</form>' +
               '<div class="hidden lg:flex items-center space-x-1 shrink-0">' + navLinksHTML(false) + '</div>' +
               '<div class="flex items-center gap-1 sm:gap-3 shrink-0">' +
@@ -105,9 +118,9 @@
             '</div>' +
           '</div>' +
           '<div id="mobile-dropdown" class="hidden lg:hidden absolute top-20 left-0 w-full surface border-b border-base shadow-2xl px-4 py-4 space-y-4">' +
-            '<form action="search.html" method="get" class="relative">' +
+            '<form action="search.html" method="get" onsubmit="return GG.doSearch(this)" class="relative">' +
               '<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i data-lucide="search" class="h-4 w-4 text-muted"></i></div>' +
-              '<input type="text" name="q" id="mobile-search" placeholder="Search games..." autocomplete="off" class="w-full surface-2 border-base rounded-xl py-3 pl-10 pr-4 text-sm text-base focus:outline-none focus:border-purple-500/50 transition-all placeholder:text-subtle" />' +
+              '<input type="text" name="q" id="mobile-search" placeholder="Search games..." autocomplete="off" oninput="GG.liveSearch(this.value)" class="w-full surface-2 border-base rounded-xl py-3 pl-10 pr-4 text-sm text-base focus:outline-none focus:border-purple-500/50 transition-all placeholder:text-subtle" />' +
             '</form>' +
             '<div class="space-y-2">' + navLinksHTML(true) + '</div>' +
             '<div class="border-t border-base pt-2 mt-2">' +
@@ -134,7 +147,7 @@
                 '<div class="flex items-center gap-3 mb-2"><img src="' + LOGO + '" alt="Logo" class="w-10 h-10 rounded-xl border border-white/10 object-cover" /><h3 class="text-lg font-extrabold text-white">Emon\'s <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Games Gallery</span></h3></div>' +
                 '<p class="text-slate-400 leading-relaxed text-sm">Your trusted source for premium gaming in Bangladesh. Lifetime online &amp; offline activations, global product keys, and game top-ups at unbeatable prices.</p>' +
                 '<div class="flex gap-3 mt-2">' +
-                  '<a href="https://www.facebook.com/messages/t/222258134976104" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 hover:bg-blue-600 hover:text-white transition-all"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>' +
+                  '<a href="' + FB_PAGE_URL + '" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-blue-400 hover:bg-blue-600 hover:text-white transition-all"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>' +
                   '<a href="https://wa.me/8801679386441" target="_blank" rel="noopener" class="w-9 h-9 rounded-lg bg-green-600/20 border border-green-500/30 flex items-center justify-center text-green-400 hover:bg-green-600 hover:text-white transition-all"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.388 0 12.035c0 2.12.551 4.192 1.6 6.017L.182 24l6.096-1.554A11.968 11.968 0 0012.031 24c6.645 0 12.03-5.388 12.03-12.035C24.06 5.388 18.676 0 12.031 0z"/></svg></a>' +
                   '<a href="mailto:zonge941@gmail.com" class="w-9 h-9 rounded-lg bg-red-600/20 border border-red-500/30 flex items-center justify-center text-red-400 hover:bg-red-600 hover:text-white transition-all"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg></a>' +
                 '</div>' +
@@ -148,8 +161,9 @@
                 '<a href="https://wa.me/8801679386441" target="_blank" rel="noopener" class="flex items-center gap-3 text-slate-400 hover:text-white transition-colors group"><div class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-green-500/20 transition-colors"><i data-lucide="smartphone" class="w-4 h-4"></i></div><span class="text-sm">WhatsApp</span></a>' +
               '</div>' +
               '<div class="flex flex-col items-center justify-start space-y-4"><h3 class="text-lg font-bold text-white mb-2 flex items-center gap-2"><i data-lucide="users" class="w-4 h-4 text-yellow-400"></i> Our Community</h3>' +
-                '<div class="w-48 h-32 mx-auto sunburst-bg flex items-center justify-center rounded-xl border-[4px] border-white shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:rotate-3 transition-transform cursor-pointer"><span class="font-black text-2xl text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.9)] -rotate-6 tracking-tight leading-tight">We <br>Love <br>Gaming</span></div>' +
-                '<a href="https://www.facebook.com/messages/t/222258134976104" target="_blank" rel="noopener" class="text-sm font-bold text-white underline decoration-2 decoration-cyan-400 underline-offset-4 hover:text-cyan-400 transition-colors">Join Facebook Page</a>' +
+                '<a href="' + FB_GROUP_URL + '" target="_blank" rel="noopener" title="Join our Facebook Group" class="w-48 h-32 mx-auto sunburst-bg flex items-center justify-center rounded-xl border-[4px] border-white shadow-[0_0_20px_rgba(250,204,21,0.4)] hover:rotate-3 transition-transform cursor-pointer"><span class="font-black text-2xl text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.9)] -rotate-6 tracking-tight leading-tight">We <br>Love <br>Gaming</span></a>' +
+                '<a href="' + FB_PAGE_URL + '" target="_blank" rel="noopener" class="text-sm font-bold text-white underline decoration-2 decoration-cyan-400 underline-offset-4 hover:text-cyan-400 transition-colors">Join Facebook Page</a>' +
+                '<a href="' + FB_GROUP_URL + '" target="_blank" rel="noopener" class="text-sm font-bold text-white underline decoration-2 decoration-purple-500 underline-offset-4 hover:text-purple-400 transition-colors">Join Facebook Group</a>' +
               '</div>' +
             '</div>' +
             '<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">' +
@@ -162,7 +176,7 @@
             '<div class="py-6 flex flex-col md:flex-row items-center justify-between gap-4">' +
               '<p class="text-slate-600 text-sm">© 2026 Emon\'s Games Gallery. All rights reserved.</p>' +
               '<div class="flex items-center gap-4"><button onclick="GG.openTerms()" class="text-slate-500 hover:text-slate-300 text-xs transition-colors">Terms &amp; Conditions</button><span class="text-slate-700">|</span><button onclick="GG.openTerms()" class="text-slate-500 hover:text-slate-300 text-xs transition-colors">Privacy Policy</button><span class="text-slate-700">|</span><button onclick="GG.openTerms()" class="text-slate-500 hover:text-slate-300 text-xs transition-colors">Refund Policy</button></div>' +
-              '<div class="dev-badge flex items-center gap-2 px-4 py-2 rounded-full"><i data-lucide="code-2" class="w-3.5 h-3.5 text-purple-400"></i><span class="text-xs text-slate-400">Website Developed by <strong class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Alishan</strong></span></div>' +
+              '<div class="dev-badge flex items-center gap-2 px-4 py-2 rounded-full"><i data-lucide="code-2" class="w-3.5 h-3.5 text-purple-400"></i><span class="text-xs text-slate-400">Website Developed by <a href="' + DEV_URL + '" target="_blank" rel="noopener" class="dev-name">Alishan</a></span></div>' +
             '</div>' +
           '</div>' +
         '</footer>';
@@ -235,7 +249,7 @@
         return '<div class="gg-card surface border-base rounded-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 group flex flex-col h-full relative animate-fade-up tilt-card">' +
             '<a href="' + href + '" class="block">' +
               '<div class="relative h-56 overflow-hidden">' + disc + popular +
-                '<img src="' + item.img + '" loading="lazy" alt="' + safeStr(item.title) + '" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-90 group-hover:opacity-100"/>' +
+                '<img src="' + item.img + '" loading="lazy"' + IMG_ERR + ' alt="' + safeStr(item.title) + '" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out opacity-90 group-hover:opacity-100"/>' +
                 '<div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80"></div>' +
                 '<div class="absolute top-3 right-3 bg-black/80 px-3 py-1.5 rounded-full text-xs font-bold text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5 shadow-lg z-10"><i data-lucide="badge-check" class="w-3 h-3"></i> ' + safeStr(item.desc.split(" • ")[0]) + "</div>" +
               "</div>" +
@@ -339,7 +353,7 @@
         } else {
             items.innerHTML = cart.map(function (item) {
                 return '<div class="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-purple-500/20 items-center transition-all">' +
-                    '<img src="' + item.img + '" alt="' + safeStr(item.title) + '" class="w-20 h-20 rounded-xl object-cover shrink-0 shadow-lg" />' +
+                    '<img src="' + item.img + '"' + IMG_ERR + ' alt="' + safeStr(item.title) + '" class="w-20 h-20 rounded-xl object-cover shrink-0 shadow-lg" />' +
                     '<div class="flex-1 min-w-0"><h4 class="font-bold text-sm text-white line-clamp-2 mb-1">' + safeStr(item.title) + '</h4><p class="text-xs text-slate-500 mb-2">' + safeStr(item.desc.split(" • ")[0]) + '</p><p class="text-cyan-400 font-black text-base">' + safeStr(item.price) + '</p></div>' +
                     '<div class="flex flex-col items-end gap-3 shrink-0"><button onclick="GG.removeItem(\'' + item.key + '\')" class="text-slate-600 hover:text-red-400 transition-colors p-1"><i data-lucide="trash-2" class="w-4 h-4"></i></button>' +
                     '<div class="flex items-center gap-2 bg-black/50 rounded-xl p-1.5 border border-white/10"><button onclick="GG.changeQty(\'' + item.key + '\',-1)" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-all"><i data-lucide="minus" class="w-3 h-3"></i></button><span class="text-sm font-black w-6 text-center text-white">' + item.qty + '</span><button onclick="GG.changeQty(\'' + item.key + '\',1)" class="w-6 h-6 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 rounded-lg transition-all"><i data-lucide="plus" class="w-3 h-3"></i></button></div></div></div>';
@@ -471,20 +485,48 @@
     /* =========================================================
        SEARCH PAGE
        ========================================================= */
-    function runSearch() {
-        var q = (qp("q") || "").trim();
-        var titleEl = $("#search-title"), subEl = $("#search-subtitle"), input = $("#desktop-search"), minput = $("#mobile-search");
-        if (input) input.value = q; if (minput) minput.value = q;
+    function runSearch(q) {
+        if (q == null) q = qp("q") || "";
+        q = String(q).trim();
+        var titleEl = $("#search-title"), subEl = $("#search-subtitle");
         var ql = q.toLowerCase();
         var flat = [];
         Object.keys(CATEGORIES).forEach(function (k) { flat = flat.concat(tagged(k, CATEGORIES[k].data)); });
         searchResults = q ? flat.filter(function (g) {
-            return g.title.toLowerCase().indexOf(ql) > -1 || (g.genre && g.genre.toLowerCase().indexOf(ql) > -1) || g.category && false;
+            return g.title.toLowerCase().indexOf(ql) > -1 ||
+                   (g.genre && g.genre.toLowerCase().indexOf(ql) > -1) ||
+                   (g.category && g.category.toLowerCase().indexOf(ql) > -1);
         }) : [];
         if (titleEl) titleEl.textContent = q ? 'Results for "' + q + '"' : "Search";
         if (subEl) subEl.textContent = searchResults.length + " game" + (searchResults.length !== 1 ? "s" : "") + " found";
         visibleCounts.search = ITEMS_PER_PAGE;
         renderGrid("search", "search-grid");
+    }
+
+    // Navigate to the search page (used by nav search on non-search pages)
+    function gotoSearch(q) { window.location.href = "search.html?q=" + encodeURIComponent(q); }
+
+    // Form submit handler for the nav search boxes (works from any page)
+    function doSearch(form) {
+        var inp = form.querySelector('input[name="q"]');
+        var q = inp ? inp.value.trim() : "";
+        if (currentPage() === "search") {
+            runSearch(q);
+            try { history.replaceState(null, "", "search.html?q=" + encodeURIComponent(q)); } catch (e) {}
+            // sync both search inputs
+            $all('input[name="q"]').forEach(function (el) { if (el !== inp) el.value = q; });
+        } else if (q) {
+            gotoSearch(q);
+        }
+        return false;
+    }
+
+    // Live filtering while typing — only on the search results page
+    function liveSearch(value) {
+        if (currentPage() !== "search") return;
+        runSearch(value);
+        try { history.replaceState(null, "", "search.html?q=" + encodeURIComponent(value.trim())); } catch (e) {}
+        $all('input[name="q"]').forEach(function (el) { if (el.value !== value) el.value = value; });
     }
 
     /* =========================================================
@@ -513,7 +555,7 @@
         host.innerHTML =
             '<nav class="text-sm text-muted mb-8 flex items-center gap-2 flex-wrap"><a href="index.html" class="hover:text-purple-400">Home</a><i data-lucide="chevron-right" class="w-4 h-4"></i><a href="' + (CATEGORIES[g.catKey] || {}).page + '" class="hover:text-purple-400">' + safeStr(g.category) + '</a><i data-lucide="chevron-right" class="w-4 h-4"></i><span class="text-base font-semibold">' + safeStr(g.title) + '</span></nav>' +
             '<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start detail-enter">' +
-              '<div class="relative rounded-3xl overflow-hidden surface border-base shadow-2xl"><img src="' + g.img + '" alt="' + safeStr(g.title) + '" class="w-full object-cover" />' + (d ? '<div class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-black shadow-xl">-' + d.pct + "%</div>" : "") + (g.popular ? '<div class="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-widest flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5"></i> Popular</div>' : "") + "</div>" +
+              '<div class="relative rounded-3xl overflow-hidden surface border-base shadow-2xl"><img src="' + g.img + '"' + IMG_ERR + ' alt="' + safeStr(g.title) + '" class="w-full object-cover" />' + (d ? '<div class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1.5 rounded-lg text-sm font-black shadow-xl">-' + d.pct + "%</div>" : "") + (g.popular ? '<div class="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1.5 rounded-lg text-xs font-black uppercase tracking-widest flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5"></i> Popular</div>' : "") + "</div>" +
               '<div>' +
                 '<div class="flex flex-wrap items-center gap-2 mb-4">' + (g.genre ? '<span class="px-2.5 py-1 bg-purple-500/10 text-cyan-300 text-[11px] font-black uppercase tracking-widest rounded border border-purple-500/20">' + safeStr(g.genre) + "</span>" : "") + '<span class="px-2.5 py-1 surface-2 border-base text-muted text-[11px] font-bold rounded">' + safeStr(g.category) + "</span></div>" +
                 '<h1 class="text-3xl md:text-5xl font-black text-base mb-4 leading-tight">' + safeStr(g.title) + "</h1>" +
@@ -563,7 +605,9 @@
         } else if (CATEGORIES[page]) {
             renderGrid(page, page + "-grid");
         } else if (page === "search") {
-            runSearch();
+            var q0 = qp("q") || "";
+            $all('input[name="q"]').forEach(function (el) { el.value = q0; });
+            runSearch(q0);
         } else if (page === "game") {
             renderGameDetail();
         }
@@ -577,7 +621,8 @@
         openAuthModal: openAuthModal, closeAuthModal: closeAuthModal, setAuthMode: setAuthMode, handleAuthSubmit: handleAuthSubmit,
         openTerms: openTerms, closeTerms: closeTerms, toggleMobileMenu: toggleMobileMenu,
         toggleVideoMute: toggleVideoMute, setSlide: setSlide, setReview: setReview,
-        loadMore: loadMore, handleSort: handleSort, renderGrid: renderGrid
+        loadMore: loadMore, handleSort: handleSort, renderGrid: renderGrid,
+        doSearch: doSearch, liveSearch: liveSearch, gotoSearch: gotoSearch
     };
 
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

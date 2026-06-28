@@ -46,9 +46,9 @@ const globalKeyData = [
 ];
 
 const onlineActivationData = [
-    { id: 1, title: 'Pragmata', price: 'Coming Soon', desc: 'Online Activation', img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSug3uVku5YutCYdHASgSr_G2aWm7p9UqMvzq1FLIUW64ERh6fE', genre: 'Action-Adventure' },
+    { id: 1, title: 'Pragmata', price: 'Coming Soon', desc: 'Online Activation', img: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3357650/e32e168b25ed68a0cf6264c220c07e96c2abfb56/header.jpg', genre: 'Action-Adventure' },
     { id: 2, title: 'Project 007 First Light', price: '300 TK', desc: 'Online Activation', img: 'https://en.wikipedia.org/wiki/Special:FilePath/007_First_Light_(2026)_cover.jpg', genre: 'Stealth Action' },
-    { id: 3, title: "John Carpenter's Toxic Commando", price: '1450 TK', desc: 'Online Activation', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHC2KfWzyYUoHVi-v5e-M5lJ7NMZH03AjxPKCvybjJdwh5wf6o', genre: 'Co-op Shooter' },
+    { id: 3, title: "John Carpenter's Toxic Commando", price: '1450 TK', desc: 'Online Activation', img: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2157830/b37812d9d1172fdc8a24784adc12e34c9563c545/header_alt_assets_1.jpg', genre: 'Co-op Shooter' },
     { id: 4, title: 'Crimson Desert', price: '300 TK', desc: 'Online Activation', img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2my0.jpg', genre: 'Action RPG' },
     { id: 5, title: 'Death Stranding 2 On The Beach', price: '300 TK', desc: 'Online Activation', img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co5v8w.jpg', genre: 'Action' },
     { id: 6, title: 'Monster Hunter Stories 3', price: '300 TK', desc: 'Online Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1277400/library_600x900.jpg', genre: 'RPG' },
@@ -65,7 +65,7 @@ const onlineActivationData = [
     { id: 17, title: 'Mafia The Old Country', price: '300 TK', desc: 'Online Activation', img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co8k1l.jpg', genre: 'Action-Adventure' },
     { id: 18, title: 'Stellar Blade', price: '300 TK', desc: 'Online Activation', img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co84mt.jpg', genre: 'Action RPG', popular: true },
     { id: 19, title: 'F1 25', price: '250 TK', desc: 'Online Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/2488620/library_600x900.jpg', genre: 'Racing' },
-    { id: 20, title: 'Doom The Dark Ages', price: '300 TK', desc: 'Online Activation', img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTJZ47D5Fwa7mgSdubjUClWwNiO1epDQDNmcvpxfAH3Fu4F-pin', genre: 'FPS', popular: true },
+    { id: 20, title: 'Doom The Dark Ages', price: '300 TK', desc: 'Online Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/3017860/library_600x900.jpg', genre: 'FPS', popular: true },
     { id: 21, title: 'No Rest for the Wicked', price: '250 TK', desc: 'Online Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1371980/library_600x900.jpg', genre: 'Action RPG' },
     { id: 22, title: 'High on Life 2', price: '300 TK', desc: 'Online Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1583230/library_600x900.jpg', genre: 'FPS' },
     { id: 23, title: 'Borderlands 4', price: '300 TK', desc: 'Online Activation', img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co8k2m.jpg', genre: 'Looter Shooter' },
@@ -160,9 +160,9 @@ const onlineActivationData = [
 
 const offlineData = [
     { id: 1, title: 'Resident Evil Requiem', price: '150 TK', desc: 'Offline Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1196590/library_600x900.jpg', genre: 'Survival Horror' },
-    { id: 2, title: 'Pragmata', price: '150 TK', desc: 'Offline Activation', img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSug3uVku5YutCYdHASgSr_G2aWm7p9UqMvzq1FLIUW64ERh6fE', genre: 'Action-Adventure' },
+    { id: 2, title: 'Pragmata', price: '150 TK', desc: 'Offline Activation', img: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3357650/e32e168b25ed68a0cf6264c220c07e96c2abfb56/header.jpg', genre: 'Action-Adventure' },
     { id: 3, title: 'Mafia: The Old Country', price: '150 TK', desc: 'Offline Activation', img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co8k1l.jpg', genre: 'Action-Adventure' },
-    { id: 4, title: 'DOOM: The Dark Ages', price: '150 TK', desc: 'Offline Activation', img: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTJZ47D5Fwa7mgSdubjUClWwNiO1epDQDNmcvpxfAH3Fu4F-pin', genre: 'FPS' },
+    { id: 4, title: 'DOOM: The Dark Ages', price: '150 TK', desc: 'Offline Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/3017860/library_600x900.jpg', genre: 'FPS' },
     { id: 5, title: 'Stellar Blade', price: '150 TK', desc: 'Offline Activation', img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co84mt.jpg', genre: 'Action RPG' },
     { id: 6, title: 'The First Berserker: Khazan', price: '150 TK', desc: 'Offline Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/2820650/library_600x900.jpg', genre: 'Action RPG' },
     { id: 7, title: 'Prince of Persia: The Lost Crown', price: '100 TK', desc: 'Offline Activation', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/2751000/library_600x900.jpg', genre: 'Metroidvania' },
@@ -199,13 +199,13 @@ const offlineData = [
 
 const psData = [
     { id: 1, title: 'EA Sports FC 24', price: '1200 TK', desc: 'PS4/PS5 Primary', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/2195250/library_600x900.jpg', genre: 'Sports' },
-    { id: 2, title: "Marvel's Spider-Man 2", price: '2500 TK', desc: 'PS5 Primary', img: 'https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTj0Fz1X64flpoUaSzW6s78zrISiQEPkjZc-Lzx7TyD3l1MTXFx', genre: 'Action-Adventure', popular: true },
+    { id: 2, title: "Marvel's Spider-Man 2", price: '2500 TK', desc: 'PS5 Primary', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/2651280/library_600x900.jpg', genre: 'Action-Adventure', popular: true },
     { id: 3, title: 'God of War Ragnarok', price: '1500 TK', desc: 'PS4/PS5 Secondary', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/library_600x900.jpg', genre: 'Action-Adventure', popular: true },
 ];
 
 const topUpData = [
-    { id: 1, title: 'Free Fire - 100 Diamonds', price: '80 TK', desc: 'Player ID Top-up', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVGndD-8g0Tq41fR8B3lS5eK-2T0s0z0h_oA', genre: 'In-Game Currency', popular: true },
-    { id: 2, title: 'PUBG Mobile - 60 UC', price: '95 TK', desc: 'Player ID Top-up', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQh1w4E8wD0gM8S3X7S0M_t_y7V3A2X2S2PmA', genre: 'In-Game Currency' },
+    { id: 1, title: 'Free Fire - 100 Diamonds', price: '80 TK', desc: 'Player ID Top-up', img: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d6/8f/47/d68f4742-5a10-b375-2114-0f840bd49ec1/AppIcon-1781539049-0-0-1x_U007emarketing-0-8-0-85-220.png/600x900bb.jpg', genre: 'In-Game Currency', popular: true },
+    { id: 2, title: 'PUBG Mobile - 60 UC', price: '95 TK', desc: 'Player ID Top-up', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/578080/library_600x900.jpg', genre: 'In-Game Currency' },
     { id: 3, title: 'Valorant - 475 VP', price: '450 TK', desc: 'Riot ID Top-up', img: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2mvt.jpg', genre: 'In-Game Currency' },
 ];
 
